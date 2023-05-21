@@ -1,9 +1,8 @@
-// import { Component } from 'react';
-// // import { ContactForm } from './ContactForm/ContactForm';
+import { Component } from 'react';
 
-// export class App extends Component {
-//   state = {
-//     contacts: [],
-//     filter: '',
-//   };
-// }
+export class App extends Component {
+  state = {
+    contacts: [],
+    filter: '',
+  };
+}
