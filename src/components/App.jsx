@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import { Component } from 'react';
 import ContactForm from './ContactForm/ContactForm';
 
@@ -13,25 +14,47 @@ export class App extends Component {
     ],
   };
 
-  handleChangeName (name) {
-    this.setState({name});
+  handleChangeName(name) {
+    this.setState({ name });
   }
-  handleChangeNumber(number){
-    this.setState({number});
+  handleChangeNumber(number) {
+    this.setState({ number });
   }
   handleFilter(filter) {
     this.setState({ filter });
   }
 
-render(){
+  handleAddContact() {
+    !this.contactExists()
+      ? this.setState({
+          contacts: [
+            ...this.state.contacts,
+            { id: nanoid(), name: this.state.name, number: this.state.number },
+          ],
+        })
+      : alert(`${this.state.name} is already in contacts`);
+  }
+
+  render() {
     return (
-        <div className='container'>
-            <h1>Phonebook</h1>
-            {/* <ContactForm></ContactForm> */}
-           <h2>Contacts</h2>
-        </div>
-    )
-}
-
-
+      <div className="container">
+        <h1>Phonebook</h1>
+        <ContactForm
+          onAddContact={e => this.handleAddContact(e)}
+          onChangeName={e => this.handleChangeName(e)}
+          onChangePhone={e => this.handleChangePhone(e)}
+        />
+        <h2>Contacts</h2>
+        {/* <Filter
+          contacts={this.state.contacts}
+          onChangeFilter={e => this.handleFilter(e)}
+        />
+        <ContactList
+          filter={this.state.filter}
+          contacts={this.state.contacts}
+          onDelete={id => this.handleDeleteContact(id)}
+        /> */}
+      </div>
+    );
+  }
 }
