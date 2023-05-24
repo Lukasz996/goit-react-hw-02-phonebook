@@ -1,8 +1,10 @@
 import { nanoid } from 'nanoid';
 import { Component } from 'react';
 import ContactForm from './ContactForm/ContactForm';
+import ContactList from './ContactList/ContactList';
+import Filter from './Filter/Filter';
 
-export class App extends Component {
+class App extends Component {
   state = {
     name: '',
     number: '',
@@ -13,13 +15,13 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
   };
-
   handleChangeName(name) {
     this.setState({ name });
   }
-  handleChangeNumber(number) {
+  handleChangePhone(number) {
     this.setState({ number });
   }
+
   handleFilter(filter) {
     this.setState({ filter });
   }
@@ -29,12 +31,27 @@ export class App extends Component {
       ? this.setState({
           contacts: [
             ...this.state.contacts,
-            { id: nanoid(), name: this.state.name, number: this.state.number },
+            {
+              id: nanoid(),
+              name: this.state.name,
+              number: this.state.number,
+            },
           ],
         })
       : alert(`${this.state.name} is already in contacts`);
   }
 
+  handleDeleteContact(id) {
+    const contactIndex = this.state.contacts.findIndex(item => item.id === id);
+    this.state.contacts.splice(contactIndex, 1);
+    this.setState(prevState => ({ contacts: [...prevState.contacts] }));
+  }
+
+  contactExists() {
+    return this.state.contacts.find(
+      item => item.name.toUpperCase() === this.state.name.toUpperCase()
+    );
+  }
   render() {
     return (
       <div className="container">
@@ -44,8 +61,9 @@ export class App extends Component {
           onChangeName={e => this.handleChangeName(e)}
           onChangePhone={e => this.handleChangePhone(e)}
         />
+
         <h2>Contacts</h2>
-        {/* <Filter
+        <Filter
           contacts={this.state.contacts}
           onChangeFilter={e => this.handleFilter(e)}
         />
@@ -53,8 +71,10 @@ export class App extends Component {
           filter={this.state.filter}
           contacts={this.state.contacts}
           onDelete={id => this.handleDeleteContact(id)}
-        /> */}
+        />
       </div>
     );
   }
 }
+
+export default App;
