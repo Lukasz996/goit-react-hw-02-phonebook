@@ -7,7 +7,7 @@ class ContactList extends Component {
       const { contacts, filter } = this.props;
       const filteredContacts = filter
         ? contacts.filter(item =>
-            item.name.toUpperCase().startsWith(filter.toUpperCase())
+            item.name.toUpperCase().includes(filter.toUpperCase())
           )
         : contacts;
       return (

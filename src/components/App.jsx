@@ -27,18 +27,20 @@ class App extends Component {
   }
 
   handleAddContact() {
-    !this.contactExists()
-      ? this.setState({
-          contacts: [
-            ...this.state.contacts,
-            {
-              id: nanoid(),
-              name: this.state.name,
-              number: this.state.number,
-            },
-          ],
-        })
-      : alert(`${this.state.name} is already in contacts`);
+    if (this.contactExists()) {
+      alert(`${this.state.name} is already in contacts`);
+      return;
+    }
+    this.setState({
+      contacts: [
+        ...this.state.contacts,
+        {
+          id: nanoid(),
+          name: this.state.name,
+          number: this.state.number,
+        },
+      ],
+    });
   }
 
   handleDeleteContact(id) {
